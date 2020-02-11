@@ -82,12 +82,12 @@ def lex(input):
     if charClass == CharClass.EOF:
         return (input, None, None)
 
-    # TODO: read a letter followed by letters or digits
+    # TODO: read a letter
     if charClass == CharClass.LETTER:
         input, lexeme = addChar(input, lexeme)
         while True:
             c, charClass = getChar(input)
-            if charClass == CharClass.LETTER or charClass == CharClass.DIGIT:
+            if charClass == CharClass.LETTER:
                 input, lexeme = addChar(input, lexeme)
             else:
                 return (input, lexeme, Token.IDENTIFIER)
