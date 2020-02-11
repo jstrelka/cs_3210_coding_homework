@@ -15,6 +15,7 @@ class CharClass(Enum):
     QUOTE      = 6
     BLANK      = 7
     OTHER      = 8
+    MONEY      = 9
 
 # reads the next char from input and returns its class
 def getChar(input):
@@ -27,6 +28,8 @@ def getChar(input):
         return (c, CharClass.DIGIT)
     if c == '"':
         return (c, CharClass.QUOTE)
+    if c == '$':
+        return (c, CharClass.MONEY)
     if c in ['+', '-', '*', '/', '>', '=', '<']:
         return (c, CharClass.OPERATOR)
     if c in ['.', ':', ',', ';']:
@@ -90,25 +93,27 @@ def lex(input):
             if charClass == CharClass.LETTER:
                 input, lexeme = addChar(input, lexeme)
             else:
+                if lexeme.lower() == "declare":
+                    return (input, lexeme, Token.DECLARE)
                 if lexeme.lower() == "real":
                     return (input, lexeme, Token.REAL)
-                elif lexeme.lower() == "complex":
+                if lexeme.lower() == "complex":
                     return (input, lexeme, Token.COMPLEX)
-                elif lexeme.lower() == "fixed":
+                if lexeme.lower() == "fixed":
                     return (input, lexeme, Token.FIXED)
-                elif lexeme.lower() == "floating":
+                if lexeme.lower() == "floating":
                     return (input, lexeme, Token.FLOATING)
-                elif lexeme.lower() == "single":
+                if lexeme.lower() == "single":
                     return (input, lexeme, Token.SINGLE)
-                elif lexeme.lower() == "double":
+                if lexeme.lower() == "double":
                     return (input, lexeme, Token.DOUBLE)
-                elif lexeme.lower() == "binary":
+                if lexeme.lower() == "binary":
                     return (input, lexeme, Token.BINARY)
-                elif lexeme.lower() == "decimal":
+                if lexeme.lower() == "decimal":
                     return (input, lexeme, Token.DECIMAL)
     
     # TODOd: read $
-    if charClass == CharClass.OTHER:
+    if charClass == CharClass.MONEY:
         input, lexeme = addChar(input, lexeme)
         while True:
             c, charClass = getChar(input)
