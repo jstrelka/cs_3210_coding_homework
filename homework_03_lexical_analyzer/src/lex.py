@@ -15,7 +15,6 @@ class CharClass(Enum):
     QUOTE      = 6
     BLANK      = 7
     OTHER      = 8
-    MONEY      = 9
 
 # reads the next char from input and returns its class
 def getChar(input):
@@ -28,8 +27,6 @@ def getChar(input):
         return (c, CharClass.DIGIT)
     if c == '"':
         return (c, CharClass.QUOTE)
-    if c == '$':
-        return (c, CharClass.MONEY)
     if c in ['+', '-', '*', '/', '>', '=', '<']:
         return (c, CharClass.OPERATOR)
     if c in ['.', ':', ',', ';']:
@@ -113,7 +110,7 @@ def lex(input):
                     return (input, lexeme, Token.DECIMAL)
     
     # TODOd: read $
-    if charClass == CharClass.MONEY:
+    if charClass == CharClass.OTHER:
         input, lexeme = addChar(input, lexeme)
         while True:
             c, charClass = getChar(input)
