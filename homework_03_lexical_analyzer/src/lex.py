@@ -68,7 +68,7 @@ class Token(Enum):
 
 # lexeme to token conversion
 lookup = {
-    "$"      : Token.MONEY,
+    "$"      : Token.MONEY
 }
 
 # returns the next (lexeme, token) pair or None if EOF is reached
@@ -82,7 +82,7 @@ def lex(input):
     if charClass == CharClass.EOF:
         return (input, None, None)
 
-    # TODO: read a letter
+    # TODOd: read a letter
     if charClass == CharClass.LETTER:
         input, lexeme = addChar(input, lexeme)
         while True:
@@ -90,26 +90,32 @@ def lex(input):
             if charClass == CharClass.LETTER:
                 input, lexeme = addChar(input, lexeme)
             else:
-                return (input, lexeme, Token.IDENTIFIER)
-
-    # TODO: read digits
-    if charClass == CharClass.DIGIT:
+                if lexeme.lower() == "real":
+                    return (input, lexeme, Token.REAL)
+                elif lexeme.lower() == "complex":
+                    return (input, lexeme, Token.COMPLEX)
+                elif lexeme.lower() == "fixed":
+                    return (input, lexeme, Token.FIXED)
+                elif lexeme.lower() == "floating":
+                    return (input, lexeme, Token.FLOATING)
+                elif lexeme.lower() == "single":
+                    return (input, lexeme, Token.SINGLE)
+                elif lexeme.lower() == "double":
+                    return (input, lexeme, Token.DOUBLE)
+                elif lexeme.lower() == "binary":
+                    return (input, lexeme, Token.BINARY)
+                elif lexeme.lower() == "decimal":
+                    return (input, lexeme, Token.DECIMAL)
+    
+    # TODO: read $
+    if charClass == CharClass.OTHER:
         input, lexeme = addChar(input, lexeme)
         while True:
             c, charClass = getChar(input)
-            if charClass == CharClass.DIGIT:
+            if charClass == CharClass.LETTER:
                 input, lexeme = addChar(input, lexeme)
             else:
-                return (input, lexeme, Token.LITERAL)
-
-    # TODO: read an operator
-    if charClass == CharClass.OPERATOR:
-        input, lexeme = addChar(input, lexeme)
-        if lexeme in lookup:
-            return (input, lexeme, lookup[lexeme])
-
-    # TODO: anything else, raise an exception
-    raise Exception("Lexical Analyzer Error: unrecognized symbol found!")
+                return (input, lexeme, Token.IDENTIFIER)
 
 # main
 if __name__ == "__main__":
