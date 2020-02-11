@@ -107,7 +107,7 @@ def lex(input):
                 elif lexeme.lower() == "decimal":
                     return (input, lexeme, Token.DECIMAL)
     
-    # TODO: read $
+    # TODOd: read $
     if charClass == CharClass.OTHER:
         input, lexeme = addChar(input, lexeme)
         while True:
@@ -116,6 +116,9 @@ def lex(input):
                 input, lexeme = addChar(input, lexeme)
             else:
                 return (input, lexeme, Token.IDENTIFIER)
+    
+    # TODOd: anything else, raise an exception
+    raise Exception("Exception: Lexical Analyzer Error: unrecognized symbol found!")
 
 # main
 if __name__ == "__main__":
