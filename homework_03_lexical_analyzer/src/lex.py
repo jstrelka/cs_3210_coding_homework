@@ -67,8 +67,17 @@ class Token(Enum):
     DECIMAL         = 11
 
 # lexeme to token conversion
-lookup = {
-    "$"      : Token.MONEY
+lookupToken = {
+    "$"         : Token.MONEY,
+    "declare"   : Token.DECLARE,
+    "real"      : Token.REAL,
+    "complex"   : Token.COMPLEX,
+    "fixed"     : Token.FIXED,
+    "floating"  : Token.FLOATING,
+    "single"    : Token.SINGLE,
+    "double"    : Token.DOUBLE,
+    "binary"    : Token.BINARY,
+    "decimal"   : Token.DECIMAL
 }
 
 # returns the next (lexeme, token) pair or None if EOF is reached
@@ -91,23 +100,23 @@ def lex(input):
                 input, lexeme = addChar(input, lexeme)
             else:
                 if lexeme.lower() == "declare":
-                    return (input, lexeme, Token.DECLARE)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "real":
-                    return (input, lexeme, Token.REAL)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "complex":
-                    return (input, lexeme, Token.COMPLEX)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "fixed":
                     return (input, lexeme, Token.FIXED)
                 elif lexeme.lower() == "floating":
-                    return (input, lexeme, Token.FLOATING)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "single":
-                    return (input, lexeme, Token.SINGLE)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "double":
-                    return (input, lexeme, Token.DOUBLE)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "binary":
-                    return (input, lexeme, Token.BINARY)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "decimal":
-                    return (input, lexeme, Token.DECIMAL)
+                    return (input, lexeme, lookupToken[lexeme])
                 else:
                     raise Exception("Exception: Lexical Analyzer Error: unrecognized symbol found!")
     
