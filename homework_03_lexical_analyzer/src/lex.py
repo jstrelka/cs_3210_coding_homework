@@ -106,7 +106,7 @@ def lex(input):
                 elif lexeme.lower() == "complex":
                     return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "fixed":
-                    return (input, lexeme, Token.FIXED)
+                    return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "floating":
                     return (input, lexeme, lookupToken[lexeme])
                 elif lexeme.lower() == "single":
